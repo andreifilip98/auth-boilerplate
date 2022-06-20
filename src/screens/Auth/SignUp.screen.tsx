@@ -65,6 +65,9 @@ const SignUp = ({navigation}: SignUpProps) => {
   const [password, setPassword] = React.useState('');
   const [confirmedPassword, setConfirmedPassword] = React.useState('');
   const [matchingPass, setMatchingPass] = React.useState(false);
+  const [incorrectEmail, setIncorrectEmail] = React.useState(false);
+
+  let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
   return (
     <StyledView style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -79,7 +82,10 @@ const SignUp = ({navigation}: SignUpProps) => {
         value={lastName}
       />
       <StyledTextInput
-        onChangeText={(email) => setEmail(email)}
+        onChangeText={(email) => {
+          reg.test(email) === false ? setIncorrectEmail(true): setIncorrectEmail(false);
+          setEmail(email);
+        }}
         placeholder="Email address"
         value={email}
       />
@@ -98,6 +104,14 @@ const SignUp = ({navigation}: SignUpProps) => {
         placeholder="Confirm Password"
         value={confirmedPassword}
       />
+      {
+        incorrectEmail ?
+          <Text>
+            Please enter a valid email
+          </Text>
+          :
+          null
+      }
       {
         confirmedPassword !== '' ?
           matchingPass ?
