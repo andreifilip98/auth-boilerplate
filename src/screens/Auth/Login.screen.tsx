@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, TextInput, TouchableOpacity} from 'react-native';
+import {Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import { colors } from '../../styleguide';
-import {SCREEN_SIGNUP} from "../../navigation/Routes";
+import {SCREEN_DASHBOARD, SCREEN_SIGNUP, SCREEN_PROFILE, SCREEN_NOTIFICATIONS} from "../../navigation/Routes";
 
 const StyledView = styled(SafeAreaView)`
   flex: 1;
@@ -58,25 +58,50 @@ type LoginProps = {
   navigation: unknown;
 }
 
+const loginCredentialsCheck = (email: String, password: String, account: {email: String, password: String},
+                               navigation: unknown) => {
+
+  if(email !== '' && password !== ''){
+    if(account.email === email && account.password === password){
+      navigation.navigate(SCREEN_NOTIFICATIONS)
+    }else{
+      Alert.alert('Incorrect credentials')
+    }
+  }else{
+    if(email === ''){
+      Alert.alert('Please enter your email');
+    }else{
+      Alert.alert('Please enter your password');
+    }
+  }
+};
+
 const Login = ({navigation}: LoginProps) => {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const account = {email: 'andrei@rebaseit.net', password: '123456asd'};
+
   return (
     <StyledView style={{alignItems: 'center', justifyContent: 'center'}}>
       <StyledTextInput
+        autoCapitalize='none'
         onChangeText={(email) => setEmail(email)}
         placeholder="Email address"
         value={email}
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <StyledTextInput
         secureTextEntry={true}
         onChangeText={(pass) => setPassword(pass)}
         placeholder="Password"
+        textContentType="oneTimeCode"
         value={password}
+        // onSubmitEditing={()=> }
       />
-      <StyledLoginButton>
+      <StyledLoginButton onPress={() => loginCredentialsCheck(email, password, account, navigation)}>
         <StyledLoginText>
           Login
         </StyledLoginText>

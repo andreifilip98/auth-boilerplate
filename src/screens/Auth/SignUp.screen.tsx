@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TextInput, TouchableOpacity} from 'react-native';
+import {Alert, Text, TextInput, TouchableOpacity} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components';
 import { colors } from '../../styleguide';
@@ -57,6 +57,22 @@ type SignUpProps = {
   navigation: unknown;
 }
 
+type signUpFields = {
+  firstName: String,
+  lastName: String,
+  email: String,
+  pass: String,
+  confirmPass: String,
+}
+
+const inputFieldsVerification = ({firstName, lastName, email, pass, confirmPass}: signUpFields) => {
+  firstName === '' || lastName === '' || email === '' || pass === '' || confirmPass === ''
+    ?
+    Alert.alert('Please fill all the fields')
+    :
+    Alert.alert('Submitted');
+};
+
 const SignUp = ({navigation}: SignUpProps) => {
 
   const [firstName, setFirstName] = React.useState('');
@@ -87,12 +103,16 @@ const SignUp = ({navigation}: SignUpProps) => {
           setEmail(email);
         }}
         placeholder="Email address"
+        keyboardType="email-address"
+        textContentType="emailAddress"
+        autoCapitalize='none'
         value={email}
       />
       <StyledTextInput
         secureTextEntry={true}
         onChangeText={(pass) => setPassword(pass)}
         placeholder="Password"
+        textContentType="oneTimeCode"
         value={password}
       />
       <StyledTextInput
@@ -102,6 +122,8 @@ const SignUp = ({navigation}: SignUpProps) => {
           password === pass ? setMatchingPass(true) : setMatchingPass(false)
         }}
         placeholder="Confirm Password"
+        textContentType="oneTimeCode"
+        onSubmitEditing={()=> inputFieldsVerification(firstName, lastName, email, password, confirmedPassword)}
         value={confirmedPassword}
       />
       {
