@@ -55,12 +55,12 @@ const DrawerNavigator = () => {
 const Navigator = (props: Props) => (
   <NavigationContainer ref={React.createRef()}>
     <Stack.Navigator initialRouteName={SCREEN_LOGIN} screenOptions={{ headerShown: false }}>
+      {/*<Stack.Screen name={SCREEN_DASHBOARD}>*/}
+      {/*  {() => (*/}
+      {/*    <BottomTabNavigator/>*/}
+      {/*  )}*/}
+      {/*</Stack.Screen>*/}
       <Stack.Screen name={SCREEN_DASHBOARD}>
-        {() => (
-          <BottomTabNavigator/>
-        )}
-      </Stack.Screen>
-      <Stack.Screen name={SCREEN_NOTIFICATIONS}>
         {() => (
           <DrawerNavigator/>
         )}

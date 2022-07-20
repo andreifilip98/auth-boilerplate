@@ -63,7 +63,7 @@ const loginCredentialsCheck = (email: String, password: String, account: {email:
 
   if(email !== '' && password !== ''){
     if(account.email === email && account.password === password){
-      navigation.navigate(SCREEN_NOTIFICATIONS)
+      navigation.navigate(SCREEN_DASHBOARD)
     }else{
       Alert.alert('Incorrect credentials')
     }
@@ -99,7 +99,7 @@ const Login = ({navigation}: LoginProps) => {
         placeholder="Password"
         textContentType="oneTimeCode"
         value={password}
-        // onSubmitEditing={()=> }
+        onSubmitEditing={()=> loginCredentialsCheck(email, password, account, navigation)}
       />
       <StyledLoginButton onPress={() => loginCredentialsCheck(email, password, account, navigation)}>
         <StyledLoginText>

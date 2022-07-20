@@ -66,7 +66,8 @@ type signUpFields = {
 }
 
 const inputFieldsVerification = ({firstName, lastName, email, pass, confirmPass}: signUpFields) => {
-  firstName === '' || lastName === '' || email === '' || pass === '' || confirmPass === ''
+
+  firstName === undefined || lastName === undefined || email === undefined || pass === undefined || confirmPass === undefined
     ?
     Alert.alert('Please fill all the fields')
     :
